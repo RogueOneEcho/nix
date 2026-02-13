@@ -15,6 +15,7 @@
         packages = {
           default = self.packages.${system}.caesura;
           caesura = pkgs.callPackage ./pkgs/caesura.nix { };
+          sox-ng = pkgs.callPackage ./pkgs/sox-ng.nix { };
         };
       }
     );
