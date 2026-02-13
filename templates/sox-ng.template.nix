@@ -33,6 +33,8 @@ stdenv.mkDerivation {
     pkg-config
   ];
 
+  doCheck = true;
+
   buildInputs = [
     flac
     lame
