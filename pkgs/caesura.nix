@@ -4,15 +4,15 @@
   fetchFromGitHub,
   flac,
   lame,
-  sox,
+  sox-ng,
   makeBinaryWrapper,
 }:
 let
-  version = "0.27.0-alpha.27";
+  version = "0.27.0-alpha.45";
   runtimeDeps = [
     flac
     lame
-    sox
+    sox-ng
   ];
 in
 rustPlatform.buildRustPackage {
@@ -23,13 +23,17 @@ rustPlatform.buildRustPackage {
     owner = "RogueOneEcho";
     repo = "caesura";
     tag = "v${version}";
-    hash = "sha256-aXdKK+AE0r1hFc+OkcXkBCc2DdMgDqnMuLEdvoh66kw=";
+    hash = "sha256-KZgHHt6Gu9uznQ+Kucn5FpxNNRUu6KmC+nOFpgIl5c4=";
   };
 
-  cargoHash = "sha256-T8Olzn8doR1VGdcFv0x32rqQ59j+saGJXs8epCKWKUg=";
+  cargoHash = "sha256-n6wq/fDKdz19MuNk7s9QPNRs9KKJb8JMKhphFMj+2Kw=";
 
   nativeBuildInputs = [ makeBinaryWrapper ];
   nativeCheckInputs = runtimeDeps;
+
+  env = {
+    CAESURA_NIX = "1";
+  };
 
   preCheck = ''
     cat > config.yml <<EOF
@@ -45,6 +49,11 @@ rustPlatform.buildRustPackage {
   postInstall = ''
     wrapProgram $out/bin/caesura \
       --prefix PATH : ${lib.makeBinPath runtimeDeps}
+  '';
+
+  doInstallCheck = true;
+  installCheckPhase = ''
+    $out/bin/caesura version
   '';
 
   passthru = {

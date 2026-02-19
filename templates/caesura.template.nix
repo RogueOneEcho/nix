@@ -4,7 +4,7 @@
   fetchFromGitHub,
   flac,
   lame,
-  sox,
+  sox-ng,
   makeBinaryWrapper,
 }:
 let
@@ -12,7 +12,7 @@ let
   runtimeDeps = [
     flac
     lame
-    sox
+    sox-ng
   ];
 in
 rustPlatform.buildRustPackage {
@@ -31,6 +31,10 @@ rustPlatform.buildRustPackage {
   nativeBuildInputs = [ makeBinaryWrapper ];
   nativeCheckInputs = runtimeDeps;
 
+  env = {
+    CAESURA_NIX = "1";
+  };
+
   preCheck = ''
     cat > config.yml <<EOF
     verbosity: trace
@@ -45,6 +49,11 @@ rustPlatform.buildRustPackage {
   postInstall = ''
     wrapProgram $out/bin/caesura \
       --prefix PATH : ${lib.makeBinPath runtimeDeps}
+  '';
+
+  doInstallCheck = true;
+  installCheckPhase = ''
+    $out/bin/caesura version
   '';
 
   passthru = {

@@ -20,6 +20,13 @@ You may be able to use [nix-portable](https://github.com/DavHau/nix-portable)
 curl -fsSL https://raw.githubusercontent.com/RogueOneEcho/nix/main/scripts/install-nix-portable.sh | bash
 ```
 
+### Uninstall nix-portable
+
+```bash
+rm ~/.local/bin/nix
+rm -rf ~/.nix-portable
+```
+
 ## Install `caesura`
 
 ```bash
