@@ -8,7 +8,7 @@
   makeBinaryWrapper,
 }:
 let
-  version = "0.27.0-alpha.45";
+  version = "0.27.0-alpha.47";
   runtimeDeps = [
     flac
     lame
@@ -23,7 +23,7 @@ rustPlatform.buildRustPackage {
     owner = "RogueOneEcho";
     repo = "caesura";
     tag = "v${version}";
-    hash = "sha256-KZgHHt6Gu9uznQ+Kucn5FpxNNRUu6KmC+nOFpgIl5c4=";
+    hash = "sha256-2re9l9xk8rCUrEV97smHqXvWkLcG/w4D7VlBOlks4wg=";
   };
 
   cargoHash = "sha256-n6wq/fDKdz19MuNk7s9QPNRs9KKJb8JMKhphFMj+2Kw=";
