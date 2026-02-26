@@ -9,6 +9,10 @@ if [[ -z "$NAME" || -z "$VERSION" ]]; then
   echo "Example: $0 caesura 0.26.0"
   exit 1
 fi
+if ! command -v nix &>/dev/null; then
+  echo "Error: nix not found in PATH"
+  exit 1
+fi
 
 REPO_ROOT="$(realpath "$(dirname "$0")/..")"
 TEMPLATE="$REPO_ROOT/templates/${NAME}.template.nix"
