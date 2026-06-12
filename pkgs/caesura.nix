@@ -42,7 +42,7 @@ rustPlatform.buildRustPackage {
   '';
 
   postPatch = ''
-    substituteInPlace Cargo.toml crates/core/Cargo.toml crates/macros/Cargo.toml \
+    substituteInPlace Cargo.toml crates/core/Cargo.toml crates/macros/Cargo.toml crates/options/Cargo.toml \
       --replace-fail 'version = "0.0.0"' 'version = "${version}"'
   '';
 
