@@ -17,7 +17,7 @@
   libpng,
 }:
 let
-  version = "14.7.1";
+  version = "14.8.0.1";
 in
 stdenv.mkDerivation {
   pname = "sox-ng";
@@ -25,7 +25,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://codeberg.org/sox_ng/sox_ng/archive/sox_ng-${version}.tar.gz";
-    hash = "sha256-NFugHmio72lmg54htkxQIWgzpepAMDWFIZH9cG3fiHs=";
+    hash = "sha256-JUmHWBgsUYEjp21feuqt0FGIQXLdfYSToMrYLCtdCSo=";
   };
 
   nativeBuildInputs = [

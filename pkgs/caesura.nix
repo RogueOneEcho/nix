@@ -2,13 +2,14 @@
   lib,
   rustPlatform,
   fetchFromGitHub,
+  cacert,
   flac,
   lame,
   sox-ng,
   makeBinaryWrapper,
 }:
 let
-  version = "0.29.0";
+  version = "0.30.0";
   runtimeDeps = [
     flac
     lame
@@ -23,19 +24,20 @@ rustPlatform.buildRustPackage {
     owner = "RogueOneEcho";
     repo = "caesura";
     tag = "v${version}";
-    hash = "sha256-LDrM6rmNgEddBgkIKJ+03452jgeaCSuwR24AW+5k/tQ=";
+    hash = "sha256-kQFNr+NuxY/FxaQYh1ZNGBQFxlaGwoPyYi2W6YTOIa4=";
   };
 
-  cargoHash = "sha256-GnrhhhQaplpjy2Eich3jhSN2aHzTuKKWqlmTx5YD1jA=";
+  cargoHash = "sha256-u3DIxHpPL/IrcFTeXql09lI47lrNOrYPqNzgjMYGbDw=";
 
   nativeBuildInputs = [ makeBinaryWrapper ];
-  nativeCheckInputs = runtimeDeps;
+  nativeCheckInputs = runtimeDeps ++ [ cacert ];
 
   env = {
     CAESURA_NIX = "1";
   };
 
   preCheck = ''
+    export SSL_CERT_FILE="${cacert}/etc/ssl/certs/ca-bundle.crt"
     cat > config.yml <<EOF
     verbosity: trace
     EOF

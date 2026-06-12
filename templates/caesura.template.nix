@@ -2,6 +2,7 @@
   lib,
   rustPlatform,
   fetchFromGitHub,
+  cacert,
   flac,
   lame,
   sox-ng,
@@ -29,13 +30,14 @@ rustPlatform.buildRustPackage {
   cargoHash = "__CARGO_HASH__";
 
   nativeBuildInputs = [ makeBinaryWrapper ];
-  nativeCheckInputs = runtimeDeps;
+  nativeCheckInputs = runtimeDeps ++ [ cacert ];
 
   env = {
     CAESURA_NIX = "1";
   };
 
   preCheck = ''
+    export SSL_CERT_FILE="${cacert}/etc/ssl/certs/ca-bundle.crt"
     cat > config.yml <<EOF
     verbosity: trace
     EOF
