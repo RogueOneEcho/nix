@@ -25,7 +25,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://codeberg.org/sox_ng/sox_ng/archive/sox_ng-${version}.tar.gz";
-    hash = "sha256-JUmHWBgsUYEjp21feuqt0FGIQXLdfYSToMrYLCtdCSo=";
+    hash = "sha256-LyillnYJB+xvwSPTMI2VSyw1mKXLo1ZFlfV8+F2NyJY=";
   };
 
   nativeBuildInputs = [
