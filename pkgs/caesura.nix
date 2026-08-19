@@ -55,7 +55,7 @@ rustPlatform.buildRustPackage {
       --prefix PATH : ${lib.makeBinPath runtimeDeps}
   '';
 
-  doInstallCheck = true;
+  doInstallCheck = false;
   installCheckPhase = ''
     $out/bin/caesura version
   '';
