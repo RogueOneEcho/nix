@@ -1,0 +1,20 @@
+name: Nix Build
+on:
+  push:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [Update Package]
+    types: [completed]
+
+jobs:
+  build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v4
+
+    - uses: cachix/install-nix-action@v27
+
+    - name: Build caesura
+      run: nix build .#caesura --print-build-logs
