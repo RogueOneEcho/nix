@@ -59,7 +59,7 @@ rustPlatform.buildRustPackage {
 
   doInstallCheck = true;
   installCheckPhase = ''
-    $out/bin/caesura version
+    $out/bin/caesura version --offline
   '';
 
   passthru = {
