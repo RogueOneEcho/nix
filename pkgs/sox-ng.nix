@@ -19,13 +19,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "sox_ng";
-  version = "14.8.0.1";
+  version = "14.8.1";
 
   src = fetchFromCodeberg {
     owner = "sox_ng";
     repo = "sox_ng";
     tag = "sox_ng-${finalAttrs.version}";
-    hash = "sha256-dHyDbMYvydC7ayG0n+RXK59w1vMTsi6y9jsYHBppC9k=";
+    hash = "sha256-dCpYG9iUS374cedXk2dSO8N4qifLCXqlXfoiyJsxMIo=";
   };
 
   nativeBuildInputs = [
