@@ -1,36 +1,45 @@
 {
   lib,
-  rustPlatform,
   fetchFromGitHub,
+  rustPlatform,
+  writableTmpDirAsHomeHook,
   flac,
   lame,
-  sox-ng,
   makeBinaryWrapper,
-  writableTmpDirAsHomeHook,
+  sox-ng,
 }:
 let
-  version = "__VERSION__";
   runtimeDeps = [
     flac
     lame
     sox-ng
   ];
 in
-rustPlatform.buildRustPackage {
+rustPlatform.buildRustPackage (finalAttrs: {
   pname = "caesura";
-  inherit version;
+  version = "__VERSION__";
 
   src = fetchFromGitHub {
     owner = "RogueOneEcho";
     repo = "caesura";
-    tag = "v${version}";
+    tag = "v${finalAttrs.version}";
     hash = "__SRC_HASH__";
   };
 
   cargoHash = "__CARGO_HASH__";
 
-  nativeBuildInputs = [ makeBinaryWrapper ];
-  nativeCheckInputs = runtimeDeps ++ [ writableTmpDirAsHomeHook ];
+  nativeBuildInputs = [
+    makeBinaryWrapper
+  ];
+  nativeCheckInputs = [
+    writableTmpDirAsHomeHook
+  ]
+  ++ runtimeDeps;
+
+  postPatch = ''
+    substituteInPlace Cargo.toml crates/*/Cargo.toml \
+      --replace-fail 'version = "0.0.0"' 'version = "${finalAttrs.version}"'
+  '';
 
   preCheck = ''
     cat > config.yml <<EOF
@@ -38,14 +47,9 @@ rustPlatform.buildRustPackage {
     EOF
   '';
 
-  postPatch = ''
-    substituteInPlace Cargo.toml crates/core/Cargo.toml crates/macros/Cargo.toml crates/options/Cargo.toml \
-      --replace-fail 'version = "0.0.0"' 'version = "${version}"'
-  '';
-
   postInstall = ''
     wrapProgram $out/bin/caesura \
-      --prefix PATH : ${lib.makeBinPath runtimeDeps}
+      --prefix PATH : ${lib.makeBinPath finalAttrs.passthru.runtimeDeps}
   '';
 
   doInstallCheck = true;
@@ -58,9 +62,9 @@ rustPlatform.buildRustPackage {
   };
 
   meta = {
-    description = "CLI for transcoding FLAC audio and uploading to Gazelle-based trackers";
+    description = "Versatile command line tool for fully automated transcoding of FLAC sources";
     homepage = "https://github.com/RogueOneEcho/caesura";
     license = lib.licenses.agpl3Only;
     mainProgram = "caesura";
   };
-}
+})

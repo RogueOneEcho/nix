@@ -1,30 +1,30 @@
 {
   lib,
   stdenv,
-  fetchzip,
+  fetchFromCodeberg,
   autoreconfHook,
   pkg-config,
   flac,
   lame,
-  libmad,
   libid3tag,
+  libmad,
   libogg,
   libvorbis,
   libsndfile,
   libopus,
   opusfile,
-  wavpack,
   libpng,
+  wavpack,
 }:
-let
-  version = "__VERSION__";
-in
-stdenv.mkDerivation {
-  pname = "sox-ng";
-  inherit version;
 
-  src = fetchzip {
-    url = "https://codeberg.org/sox_ng/sox_ng/archive/sox_ng-${version}.tar.gz";
+stdenv.mkDerivation (finalAttrs: {
+  pname = "sox_ng";
+  version = "__VERSION__";
+
+  src = fetchFromCodeberg {
+    owner = "sox_ng";
+    repo = "sox_ng";
+    tag = "sox_ng-${finalAttrs.version}";
     hash = "__SRC_HASH__";
   };
 
@@ -33,26 +33,27 @@ stdenv.mkDerivation {
     pkg-config
   ];
 
-  doCheck = true;
-
   buildInputs = [
     flac
     lame
-    libmad
     libid3tag
-    libogg
-    libvorbis
+    libmad
     libsndfile
     libopus
     opusfile
-    wavpack
     libpng
+    wavpack
+    libogg
+    libvorbis
   ];
 
+  enableParallelBuilding = true;
+  doCheck = true;
+
   meta = {
-    description = "Sound eXchange - maintained fork of SoX";
+    description = "Another Swiss Army Knife of sound processing utilities";
     homepage = "https://codeberg.org/sox_ng/sox_ng";
     license = lib.licenses.gpl2Plus;
-    mainProgram = "sox_ng";
+    platforms = lib.platforms.unix;
   };
-}
+})
