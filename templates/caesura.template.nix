@@ -7,6 +7,7 @@
   lame,
   sox-ng,
   makeBinaryWrapper,
+  writableTmpDirAsHomeHook,
 }:
 let
   version = "__VERSION__";
@@ -30,7 +31,10 @@ rustPlatform.buildRustPackage {
   cargoHash = "__CARGO_HASH__";
 
   nativeBuildInputs = [ makeBinaryWrapper ];
-  nativeCheckInputs = runtimeDeps ++ [ cacert ];
+  nativeCheckInputs = runtimeDeps ++ [
+    cacert
+    writableTmpDirAsHomeHook
+  ];
 
   env = {
     CAESURA_NIX = "1";
