@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  fetchurl,
+  fetchzip,
   autoreconfHook,
   pkg-config,
   flac,
@@ -23,9 +23,9 @@ stdenv.mkDerivation {
   pname = "sox-ng";
   inherit version;
 
-  src = fetchurl {
+  src = fetchzip {
     url = "https://codeberg.org/sox_ng/sox_ng/archive/sox_ng-${version}.tar.gz";
-    hash = "sha256-JUmHWBgsUYEjp21feuqt0FGIQXLdfYSToMrYLCtdCSo=";
+    hash = "sha256-dHyDbMYvydC7ayG0n+RXK59w1vMTsi6y9jsYHBppC9k=";
   };
 
   nativeBuildInputs = [

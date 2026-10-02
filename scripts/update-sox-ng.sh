@@ -21,7 +21,7 @@ echo "Updating sox-ng to $VERSION"
 
 echo "Computing source hash..."
 TARBALL_URL="https://codeberg.org/sox_ng/sox_ng/archive/sox_ng-${VERSION}.tar.gz"
-RAW_HASH=$(nix-prefetch-url "$TARBALL_URL" 2>/dev/null)
+RAW_HASH=$(nix-prefetch-url --unpack "$TARBALL_URL" 2>/dev/null)
 SRC_HASH=$(nix hash convert --hash-algo sha256 --to sri "$RAW_HASH")
 echo "Source hash: $SRC_HASH"
 

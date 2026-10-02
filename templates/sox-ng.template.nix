@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  fetchurl,
+  fetchzip,
   autoreconfHook,
   pkg-config,
   flac,
@@ -23,7 +23,7 @@ stdenv.mkDerivation {
   pname = "sox-ng";
   inherit version;
 
-  src = fetchurl {
+  src = fetchzip {
     url = "https://codeberg.org/sox_ng/sox_ng/archive/sox_ng-${version}.tar.gz";
     hash = "__SRC_HASH__";
   };
